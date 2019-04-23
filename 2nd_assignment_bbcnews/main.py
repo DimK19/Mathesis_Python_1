@@ -115,7 +115,6 @@ def update_user():
     συμβολοσειρά με το χαρακτήρα $ ως διαχωριστικό.
     Η συνάρτηση επιστρέφει None
     '''
-    # ΤΟ ΛΑΘΟΣ ΜΟΥ: ΑΝ Ο ΧΡΗΣΤΗΣ ΔΩΣΕΙ USERNAME ΚΑΙ ΜΕΤΑ ΚΛΕΙΣΕΙ ΤΟ ΠΡΟΓΡΑΜΜΑ, ΔΕΝ ΑΠΟΘΗΚΕΥΕΤΑΙ ΩΣ ΚΕΝΟ, ΌΠΩΣ ΘΑ ΕΠΡΕΠΕ
 
     global user
     
@@ -129,7 +128,9 @@ def update_user():
     all_entries = [dic for dic in all_entries if(dic["user"].lower() != un.lower())] # Αφαιρεί από τη λίστα όλα τα λεξικά που αφορούν τον τρέχοντα user
 
     open(users_file, 'w', encoding = "utf-8").close() # Καθαρίζει το περιεχόμενο του αρχείου
-    for c, s in zip(continents, states): all_entries.append({"user" : un, "area" : c, "keywords" : '$'.join(s)}) # Η συνάρτηση zip αντιστοιχίζει ένα
+    if(not continents): all_entries.append({"user" : un, "area" : '', "keywords" : ''}) # Αν το λεξικό user["areas"] είναι κενό
+    else:
+        for c, s in zip(continents, states): all_entries.append({"user" : un, "area" : c, "keywords" : '$'.join(s)}) # Η συνάρτηση zip αντιστοιχίζει ένα
                                                                                                                  # προς ένα τα στοιχεία των δύο λιστών
 
     utilities.dict_to_csv(all_entries, users_file) # Αποθηκεύει στο αρχείο την τροποποιημένη λίστα
